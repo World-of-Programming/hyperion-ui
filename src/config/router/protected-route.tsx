@@ -1,0 +1,16 @@
+import { Navigate, useLocation } from 'react-router-dom'
+import { authService } from '@hyperion/config/auth/auth.service'
+
+interface ProtectedRouteProps {
+    element: React.ReactElement
+}
+
+export const ProtectedRoute = ({ element }: ProtectedRouteProps) => {
+    const location = useLocation()
+
+    if (!authService.isAuthenticated()) {
+        return <Navigate to="/login" replace state={{ from: location }} />
+    }
+
+    return element
+}
